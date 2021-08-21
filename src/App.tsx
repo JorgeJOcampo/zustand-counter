@@ -1,24 +1,29 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import useStore, { CountSlice } from 'store/store';
-import shallow from 'zustand/shallow';
+// import shallow from 'zustand/shallow';
 import logo from './logo.svg';
 import './App.css';
 
 const App = (): JSX.Element => {
-  const { count, increase, decrease, reset, next } = useStore(
-    (state: CountSlice) => ({
-      count: state.count,
-      increase: state.increase,
-      decrease: state.decrease,
-      reset: state.reset,
-      next: state.next
-    }),
-    shallow
+  // const { count, increase, decrease, reset, next } = useStore(
+  //   (state: CountSlice) => ({
+  //     count: state.count,
+  //     increase: state.increase,
+  //     decrease: state.decrease,
+  //     reset: state.reset,
+  //     next: state.next
+  //   }),
+  //   shallow
+  // );
+  const count = useStore((state: CountSlice) => state.count);
+  const increase = useStore(
+    useCallback((state: CountSlice) => state.increase, [])
   );
-  // const count = useStore((state: any) => state.count);
-  // const increase = useStore((state: any) => state.increase);
-  // const decrease = useStore((state: any) => state.decrease);
-  // const reset = useStore((state: any) => state.reset);
+  const decrease = useStore(
+    useCallback((state: CountSlice) => state.decrease, [])
+  );
+  const reset = useStore(useCallback((state: CountSlice) => state.reset, []));
+  const next = useStore(useCallback((state: CountSlice) => state.next, []));
   // useEffect(() => getCounter(), [getCounter]);
 
   return (
