@@ -1,20 +1,26 @@
-import React, { useState } from 'react';
-import create from 'zustand';
+import React, { useEffect } from 'react';
+import { useStore } from 'store/store';
+import shallow from 'zustand/shallow';
 import logo from './logo.svg';
 import './App.css';
 
-const useStore = create((set) => ({
-  count: 0,
-  increase: () => set((state: any) => ({ count: state.count + 1 })),
-  decrease: () => set((state: any) => ({ count: state.count - 1 })),
-  reset: () => set({ count: 0 })
-}));
-
 const App = (): JSX.Element => {
-  const count = useStore((state: any) => state.count);
-  const increase = useStore((state: any) => state.increase);
-  const decrease = useStore((state: any) => state.decrease);
-  const reset = useStore((state: any) => state.reset);
+  const { count, increase, decrease, reset, getCounter, next } = useStore(
+    (state: any) => ({
+      count: state.count,
+      increase: state.increase,
+      decrease: state.decrease,
+      reset: state.reset,
+      getCounter: state.getCounter,
+      next: state.next
+    }),
+    shallow
+  );
+  // const count = useStore((state: any) => state.count);
+  // const increase = useStore((state: any) => state.increase);
+  // const decrease = useStore((state: any) => state.decrease);
+  // const reset = useStore((state: any) => state.reset);
+  // useEffect(() => getCounter(), [getCounter]);
 
   return (
     <div className="App">
@@ -33,6 +39,7 @@ const App = (): JSX.Element => {
             reset
           </button>
         </p>
+        <p>Next: {next()}</p>
         <p>
           Edit <code>App.tsx</code> and save to test HMR updates.
         </p>
