@@ -1,17 +1,16 @@
-import React, { useEffect } from 'react';
-import { useStore } from 'store/store';
+import React from 'react';
+import useStore, { CountSlice } from 'store/store';
 import shallow from 'zustand/shallow';
 import logo from './logo.svg';
 import './App.css';
 
 const App = (): JSX.Element => {
-  const { count, increase, decrease, reset, getCounter, next } = useStore(
-    (state: any) => ({
+  const { count, increase, decrease, reset, next } = useStore(
+    (state: CountSlice) => ({
       count: state.count,
       increase: state.increase,
       decrease: state.decrease,
       reset: state.reset,
-      getCounter: state.getCounter,
       next: state.next
     }),
     shallow
