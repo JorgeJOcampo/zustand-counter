@@ -1,9 +1,20 @@
 import React, { useState } from 'react';
+import create from 'zustand';
 import logo from './logo.svg';
 import './App.css';
 
+const useStore = create((set) => ({
+  count: 0,
+  increase: () => set((state: any) => ({ count: state.count + 1 })),
+  decrease: () => set((state: any) => ({ count: state.count - 1 })),
+  reset: () => set({ count: 0 })
+}));
+
 const App = (): JSX.Element => {
-  const [count, setCount] = useState(0);
+  const count = useStore((state: any) => state.count);
+  const increase = useStore((state: any) => state.increase);
+  const decrease = useStore((state: any) => state.decrease);
+  const reset = useStore((state: any) => state.reset);
 
   return (
     <div className="App">
@@ -11,8 +22,15 @@ const App = (): JSX.Element => {
         <img src={logo} className="App-logo" alt="logo" />
         <p>Hello Vite + React!</p>
         <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
+          Count is: {count}
+          <button type="button" onClick={increase}>
+            +
+          </button>
+          <button type="button" onClick={decrease}>
+            -
+          </button>
+          <button type="button" onClick={reset}>
+            reset
           </button>
         </p>
         <p>
